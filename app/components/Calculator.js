@@ -9,6 +9,10 @@ const Operations = {
   'multiply': (num1, num2) => num1 * num2,
 }
 
+const KeyCodes = {
+
+}
+
 class Display extends React.Component {
   render() {
     var displayText = this.props.displayText;
@@ -88,7 +92,7 @@ export default class Calculator extends React.Component {
       displayingResult: false
     });
   }
-  calulateResult() {
+  calculateResult() {
     const {currentDisplay, storedDisplay, operation} = this.state;
     if (!operation || !storedDisplay) {
       return;
@@ -123,6 +127,49 @@ export default class Calculator extends React.Component {
       displayingResult: false
     });
   }
+  handleKeyPress(evt) {
+    //console.log('handleKeyPress - evt: %o', evt);
+    const {key} = evt;
+    const {currentDisplay, storedDisplay, operationJustEntered} = this.state;
+    const numRegex = /^\d+$/;
+
+    if (numRegex.test(key)) {
+      this.handleDigitPress(key);
+      return;
+    }
+
+    switch (key) {
+      case "+":
+        this.handleOperationPress('plus')
+        break
+      case "-":
+        this.handleOperationPress('minus')
+        break
+      case "/":
+        this.handleOperationPress('divide')
+        break
+      case "*":
+        this.handleOperationPress('multiply')
+        break
+      case "Backspace":
+        this.clear()
+        break
+      case "Escape":
+        this.clearAll()
+        break
+      case "Enter":
+        if (storedDisplay !== null && !operationJustEntered) {
+          this.calculateResult();
+        }
+        break
+    }
+  }
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyPress.bind(this))
+  }
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyPress.bind(this))
+  }
   render() {
     return (
       <div className={styles.container}>
@@ -153,7 +200,7 @@ export default class Calculator extends React.Component {
           <div className="keyRow">
             {this.createDigitKey(0)}
             {this.createDigitKey('.')}
-            {this.createFunctionKey('=', 'calulateResult')}
+            {this.createFunctionKey('=', 'calculateResult')}
             {this.createOperationKey('/', 'divide')}
           </div>
         </div>
