@@ -95,8 +95,8 @@ export default class Calculator extends React.Component {
       return;
     }
 
-    let num1 = storedDisplay.indexOf('.') ? parseFloat(storedDisplay) : parseInt(storedDisplay);
-    let num2 = currentDisplay.indexOf('.') ? parseFloat(currentDisplay) : parseInt(currentDisplay);
+    let num1 = storedDisplay.indexOf('.') !== -1 ? parseFloat(storedDisplay) : parseInt(storedDisplay);
+    let num2 = currentDisplay.indexOf('.') !== -1 ? parseFloat(currentDisplay) : parseInt(currentDisplay);
     let result = Operations[operation](num1, num2);
 
     if (result % 1 !== 0) {
