@@ -1,25 +1,35 @@
 .container {
-  background: white;
+  background: #FFFDF6;
   padding: 10px;
   font-family: monospace;
+  width: 358px;
 }
 
 .display {
   background: black;
   color: white;
   font-size: 50px;
-  height: 80px;
-  line-height: 80px;
+  height: 90px;
+  line-height: 90px;
   padding: 0 20px;
   text-align: right;
+  box-sizing: border-box;
 }
 
+.keyRow {
+
+}
 .key {
-  border: 1px solid black;
-  font-size: 30px;
-  height: 80px;
-  line-height: 80px;
-  margin: 1px 1px 0 0;
+  /*border: 1px solid black;*/
+  border: none;
+  background: #dbdbdb;
+  font-size: 26px;
+  height: 70px;
+  line-height: 70px;
+  margin: 2px 2px 0 0;
   text-align: center;
-  width: 80px;
+  width: 70px;
+}
+.key:last-child {
+  margin-right: 0;
 }

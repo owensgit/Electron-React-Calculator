@@ -55,14 +55,24 @@ app.on('window-all-closed', () => {
 
 
 app.on('ready', async () => {
+
+  let winWidth = 378;
+  let winHeight = 422;
+  let winResizable = false;
+
   if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+    winWidth = 728;
+    winHeight = 1024;
+    winResizable = true;
     await installExtensions();
   }
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728
+    width: winWidth,
+    height: winHeight,
+    center: true,
+    resizable: winResizable
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);

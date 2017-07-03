@@ -9,10 +9,6 @@ const Operations = {
   'multiply': (num1, num2) => num1 * num2,
 }
 
-const KeyCodes = {
-
-}
-
 class Display extends React.Component {
   render() {
     var displayText = this.props.displayText;
@@ -75,8 +71,8 @@ export default class Calculator extends React.Component {
     }
     if (operationJustEntered) {
       this.setState({
-        currentDisplay: value,
-        storedDisplay: currentDisplay,
+        currentDisplay: value.toString(),
+        storedDisplay: currentDisplay.toString(),
         operationJustEntered: false
       });
     } else {
@@ -94,12 +90,19 @@ export default class Calculator extends React.Component {
   }
   calculateResult() {
     const {currentDisplay, storedDisplay, operation} = this.state;
+
     if (!operation || !storedDisplay) {
       return;
     }
-    let num1 = parseInt(storedDisplay);
-    let num2 = parseInt(currentDisplay);
+
+    let num1 = storedDisplay.indexOf('.') ? parseFloat(storedDisplay) : parseInt(storedDisplay);
+    let num2 = currentDisplay.indexOf('.') ? parseFloat(currentDisplay) : parseInt(currentDisplay);
     let result = Operations[operation](num1, num2);
+
+    if (result % 1 !== 0) {
+      result = result.toFixed(3)
+    }
+
     this.setState({
       currentDisplay: result,
       storedDisplay: null,
@@ -133,7 +136,7 @@ export default class Calculator extends React.Component {
     const {currentDisplay, storedDisplay, operationJustEntered} = this.state;
     const numRegex = /^\d+$/;
 
-    if (numRegex.test(key)) {
+    if (numRegex.test(key) || key === ".") {
       this.handleDigitPress(key);
       return;
     }
@@ -177,27 +180,27 @@ export default class Calculator extends React.Component {
           <Display displayText={this.state.currentDisplay}/>
         </div>
         <div>
-          <div className="keyRow">
+          <div className={styles.keyRow}>
             {this.createDigitKey(7)}
             {this.createDigitKey(8)}
             {this.createDigitKey(9)}
             {this.createOperationKey('+', 'plus')}
             {this.createFunctionKey('AC', 'clearAll')}
           </div>
-          <div className="keyRow">
+          <div className={styles.keyRow}>
             {this.createDigitKey(4)}
             {this.createDigitKey(5)}
             {this.createDigitKey(6)}
             {this.createOperationKey('-', 'minus')}
             {this.createFunctionKey('C', 'clear')}
           </div>
-          <div className="keyRow">
+          <div className={styles.keyRow}>
             {this.createDigitKey(1)}
             {this.createDigitKey(2)}
             {this.createDigitKey(3)}
             {this.createOperationKey('*', 'multiply')}
           </div>
-          <div className="keyRow">
+          <div className={styles.keyRow}>
             {this.createDigitKey(0)}
             {this.createDigitKey('.')}
             {this.createFunctionKey('=', 'calculateResult')}
