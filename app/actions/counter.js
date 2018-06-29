@@ -2,7 +2,7 @@
 import type { counterStateType } from '../reducers/counter';
 
 type actionType = {
-  type: string
+  +type: string
 };
 
 export const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
@@ -21,7 +21,10 @@ export function decrement() {
 }
 
 export function incrementIfOdd() {
-  return (dispatch: (action: actionType) => void, getState: () => counterStateType) => {
+  return (
+    dispatch: (action: actionType) => void,
+    getState: () => counterStateType
+  ) => {
     const { counter } = getState();
 
     if (counter % 2 === 0) {
