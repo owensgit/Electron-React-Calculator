@@ -54,8 +54,8 @@ app.on('window-all-closed', () => {
 
 app.on('ready', async () => {
 
-  let winWidth = 378;
-  let winHeight = 422;
+  let winWidth = 382;
+  let winHeight = 434;
   let winResizable = false;
 
   if (

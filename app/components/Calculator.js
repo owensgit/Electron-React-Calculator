@@ -19,7 +19,7 @@ class Display extends React.Component {
       <div className={styles.display}>
         {displayText}
       </div>
-    )
+    ),
   }
 }
 
